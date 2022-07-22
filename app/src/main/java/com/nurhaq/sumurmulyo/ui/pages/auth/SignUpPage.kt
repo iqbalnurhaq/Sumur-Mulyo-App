@@ -4,6 +4,7 @@ import android.widget.Space
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -13,6 +14,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -111,12 +114,29 @@ fun SignUpPage(
                     icon = R.drawable.ic_google
                 )
                 Spacer(modifier = Modifier.height(19.dp))
-                Text(
+                Row(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Already have an account? Login",
-                    style = MaterialTheme.typography.h3,
-                    textAlign = TextAlign.Center
-                )
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Already have an account? ",
+                        style = MaterialTheme.typography.h3.copy(color = light20),
+                        textAlign = TextAlign.Center
+                    )
+                    ClickableText(
+                        text = AnnotatedString(
+                            "Login",
+                            spanStyle = SpanStyle(
+                                textDecoration = TextDecoration.Underline
+                            )
+                        ),
+                        style = MaterialTheme.typography.h3.copy(color = purple100),
+                        onClick = {
+
+                        }
+                    )
+
+                }
             }
 
         }
