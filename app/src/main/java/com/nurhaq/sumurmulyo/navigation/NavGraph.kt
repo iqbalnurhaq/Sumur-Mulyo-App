@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.nurhaq.sumurmulyo.ui.pages.HomeScreen
 import com.nurhaq.sumurmulyo.ui.pages.auth.OnBoardingPage
+import com.nurhaq.sumurmulyo.ui.pages.auth.SignInPage
 import com.nurhaq.sumurmulyo.ui.pages.auth.SignUpPage
 import com.nurhaq.sumurmulyo.ui.pages.auth.SplashScreenPage
 
@@ -44,6 +45,11 @@ fun SetupNavGraph(
             route = Screen.SignUp.route
         ){
             SignUpPage(navController)
+        }
+        composable(
+            route = Screen.SignIn.route
+        ){
+            SignInPage(navController)
         }
     }
 }

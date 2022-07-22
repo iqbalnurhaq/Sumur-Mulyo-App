@@ -28,6 +28,7 @@ import com.nurhaq.sumurmulyo.ui.components.InputText
 import com.nurhaq.sumurmulyo.ui.parts.HeaderNav
 import com.nurhaq.sumurmulyo.R
 import com.nurhaq.sumurmulyo.components.ButtonText
+import com.nurhaq.sumurmulyo.navigation.Screen
 import com.nurhaq.sumurmulyo.ui.theme.*
 import com.nurhaq.sumurmulyo.util.HyperlinkText
 
@@ -36,12 +37,15 @@ fun SignUpPage(
     navController: NavController,
 ) {
     val isChecked = rememberSaveable { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
     Surface(
         modifier = Modifier
             .fillMaxSize()
             .background(light100)
     ) {
-        Column {
+        Column(
+            modifier = Modifier.verticalScroll(scrollState),
+        ) {
             HeaderNav(
                 modifier = Modifier.padding(top = 50.dp),
                 title = "Sign Up",
@@ -132,11 +136,12 @@ fun SignUpPage(
                         ),
                         style = MaterialTheme.typography.h3.copy(color = purple100),
                         onClick = {
-
+                            navController.navigate(Screen.SignIn.route)
                         }
                     )
 
                 }
+                Spacer(modifier = Modifier.height(150.dp))
             }
 
         }
@@ -173,14 +178,12 @@ fun UseFormSignUp(
     val name = rememberSaveable { mutableStateOf("") }
     val email = rememberSaveable { mutableStateOf("") }
     val password = rememberSaveable { mutableStateOf("") }
-    val scrollState = rememberScrollState()
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }
 
 
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .verticalScroll(scrollState),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
