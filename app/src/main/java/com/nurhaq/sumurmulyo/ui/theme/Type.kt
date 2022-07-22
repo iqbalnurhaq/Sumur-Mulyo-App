@@ -41,7 +41,13 @@ val Typography = Typography(
         fontWeight = FontWeight.SemiBold,
         fontSize = 18.sp,
         color = light80
-    )
+    ),
+    h5 = TextStyle(
+        fontFamily = poppins,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        color = black
+    ),
     /* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,

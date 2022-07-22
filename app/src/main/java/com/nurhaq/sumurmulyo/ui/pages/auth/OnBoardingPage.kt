@@ -6,6 +6,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,6 +27,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import com.nurhaq.sumurmulyo.components.ButtonText
+import com.nurhaq.sumurmulyo.navigation.Screen
 import com.nurhaq.sumurmulyo.ui.theme.Purple200
 import com.nurhaq.sumurmulyo.ui.theme.light20
 import com.nurhaq.sumurmulyo.ui.theme.purple100
@@ -85,9 +87,13 @@ fun OnBoardingPage(
         ) {
             Spacer(modifier = Modifier.height(25.dp))
             ButtonText(
+                modifier = Modifier
+                    .clickable{
+                        navController.navigate(route = Screen.SignUp.route)
+                    },
                 title = "Sign Up",
                 color = purple100,
-                colorText = light20
+                colorText = light20,
             )
             Spacer(modifier = Modifier.height(16.dp))
             ButtonText(
