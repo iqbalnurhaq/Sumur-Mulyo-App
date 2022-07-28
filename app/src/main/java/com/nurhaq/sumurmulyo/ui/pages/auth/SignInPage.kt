@@ -1,6 +1,9 @@
 package com.nurhaq.sumurmulyo.ui.pages.auth
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
@@ -9,16 +12,19 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nurhaq.sumurmulyo.ui.components.InputText
 import com.nurhaq.sumurmulyo.ui.parts.HeaderNav
@@ -28,13 +34,39 @@ import com.nurhaq.sumurmulyo.components.ButtonText
 import com.nurhaq.sumurmulyo.navigation.Screen
 import com.nurhaq.sumurmulyo.ui.theme.light20
 import com.nurhaq.sumurmulyo.ui.theme.purple100
+import com.nurhaq.sumurmulyo.viewmodel.LoginViewModel
 
 
 @Composable
 fun SignInPage(
-    navController: NavController
+    navController: NavController,
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
+
+    val ctx = LocalContext.current
+
+    fun processAuth(email: String, password: String) {
+        if (email.isNotBlank() || password.isNotBlank()){
+            loginViewModel.login(email, password){ success, userHasComplete, message ->
+                Toast.makeText(ctx, message, Toast.LENGTH_LONG).show()
+                if (success && userHasComplete) {
+                    Log.e("Message", "success and complete")
+                }
+                if (success && !userHasComplete) {
+                    Log.e("Message", "success and not complete")
+                }
+            }
+        }else{
+            Log.e("Err", "err")
+        }
+    }
+
+
+    val email = rememberSaveable { mutableStateOf("") }
+    val password = rememberSaveable { mutableStateOf("") }
+    val passwordVisibility = rememberSaveable { mutableStateOf(false) }
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -54,13 +86,20 @@ fun SignInPage(
                     .fillMaxWidth()
                     .padding(top = 50.dp)
             ) {
-                UseFormSignIn()
+                UseFormSignIn(
+                    email = email,
+                    password = password,
+                    passwordVisibility = passwordVisibility
+                )
             }
             Spacer(modifier = Modifier.height(40.dp))
             ButtonText(
                 title = "Sign In",
                 color = purple100,
                 colorText = light100,
+                modifier = Modifier.clickable {
+                   processAuth(email = email.value, password = password.value)
+                }
             )
             Spacer(modifier = Modifier.height(35.dp))
             Row(
@@ -95,12 +134,13 @@ fun SignInPage(
 @Composable
 fun UseFormSignIn(
     loading: Boolean = false,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    email : MutableState<String>,
+    password: MutableState<String>,
+    passwordVisibility: MutableState<Boolean>
 ) {
 
-    val email = rememberSaveable { mutableStateOf("") }
-    val password = rememberSaveable { mutableStateOf("") }
-    val passwordVisibility = rememberSaveable { mutableStateOf(false) }
+
 
     Column(
         modifier = Modifier.fillMaxWidth(),

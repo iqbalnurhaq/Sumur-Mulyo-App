@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SumurMulyoTheme {
                 val navController = rememberNavController()
-                SetupNavGraph(navController = navController, startDestination = Screen.Splash.route)
+                SetupNavGraph(navController = navController, startDestination = Screen.SignIn.route)
             }
         }
     }
