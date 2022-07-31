@@ -10,4 +10,11 @@ interface DataSource {
         email: String,
         password: String
     ): DataState<ApiBaseResponse<UserResponse>>
+
+    suspend fun register(
+        name: String,
+        email: String,
+        password: String,
+        phone: String
+    ): DataState<ApiBaseResponse<UserResponse>>
 }

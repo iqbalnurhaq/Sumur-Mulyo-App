@@ -34,4 +34,27 @@ class UserRepositoryImpl constructor(
             DataState.onLoading -> emit(DataState.onLoading)
         }
     }.flowOn(dispatcherProvider.io())
+
+    override suspend fun register(
+        name: String,
+        email: String,
+        password: String,
+        phone: String
+    ): Flow<DataState<UserResponse>> = flow {
+        emit(DataState.onLoading)
+        when (val result = dataSource.register(name, email, password, phone)) {
+            is DataState.onData -> {
+                if (result.data.meta.status == "success") {
+                    val user = result.data.data
+                    emit(DataState.onData(user))
+                }else{
+
+                }
+            }
+            is DataState.onFailure -> {
+                emit(result)
+            }
+            DataState.onLoading -> emit(DataState.onLoading)
+        }
+    }.flowOn(dispatcherProvider.io())
 }

@@ -10,4 +10,11 @@ interface UserRepository {
         email : String,
         password: String
     ): Flow<DataState<UserResponse>>
+
+    suspend fun register(
+        name: String,
+        email: String,
+        password: String,
+        phone: String
+    ): Flow<DataState<UserResponse>>
 }
