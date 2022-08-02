@@ -44,7 +44,7 @@ object MainModule {
         @ApplicationContext context: Context
     ): DataSource = SumurData.getDataSource(
         context,
-        "http://192.168.1.17:8000/api/"
+        "http://192.168.100.159:8000/api/"
     )
 
     @Provides

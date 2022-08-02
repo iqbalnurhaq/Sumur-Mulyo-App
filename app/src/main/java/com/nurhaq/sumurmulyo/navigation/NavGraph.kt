@@ -8,7 +8,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.nurhaq.sumurmulyo.ui.pages.DashboardPage
 import com.nurhaq.sumurmulyo.ui.pages.HomeScreen
+import com.nurhaq.sumurmulyo.ui.pages.Order.OrderScreen
+import com.nurhaq.sumurmulyo.ui.pages.Profile.ProfileScreen
+import com.nurhaq.sumurmulyo.ui.pages.Transaction.TransactionScreen
 import com.nurhaq.sumurmulyo.ui.pages.auth.OnBoardingPage
 import com.nurhaq.sumurmulyo.ui.pages.auth.SignInPage
 import com.nurhaq.sumurmulyo.ui.pages.auth.SignUpPage
@@ -26,30 +30,34 @@ fun SetupNavGraph(
         navController = navController,
         startDestination = startDestination
     ){
-        composable(
-            route = Screen.Splash.route
-        ){
-            SplashScreenPage(navController)
-        }
-        composable(
-            route = Screen.OnBoarding.route
-        ){
-            OnBoardingPage(navController)
-        }
-        composable(
-            route = Screen.Home.route
-        ){
-            HomeScreen(navController)
-        }
-        composable(
-            route = Screen.SignUp.route
-        ){
-            SignUpPage(navController)
-        }
-        composable(
-            route = Screen.SignIn.route
-        ){
-            SignInPage(navController)
-        }
+
+
+        // Dashboard
+
+
+
+//        // Bottom Navigation
+//        composable(
+//            route = BottomScreen.Home.route
+//        ){
+//            HomeScreen(navController)
+//        }
+//        composable(
+//            route = BottomScreen.Transaction.route
+//        ){
+//            TransactionScreen(navController)
+//        }
+//        composable(
+//            route =  BottomScreen.Order.route
+//        ){
+//            OrderScreen(navController)
+//        }
+//        composable(
+//            route = BottomScreen.Profile.route
+//        ){
+//            ProfileScreen(navController)
+//        }
+
+
     }
 }

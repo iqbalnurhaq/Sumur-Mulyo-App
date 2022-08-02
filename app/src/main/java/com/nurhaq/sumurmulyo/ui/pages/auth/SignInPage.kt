@@ -34,21 +34,20 @@ import com.nurhaq.sumurmulyo.components.ButtonText
 import com.nurhaq.sumurmulyo.navigation.Screen
 import com.nurhaq.sumurmulyo.ui.theme.light20
 import com.nurhaq.sumurmulyo.ui.theme.purple100
-import com.nurhaq.sumurmulyo.viewmodel.LoginViewModel
 
 
 @Composable
 fun SignInPage(
     navController: NavController,
-    loginViewModel: LoginViewModel = hiltViewModel()
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
 
     val ctx = LocalContext.current
 
-    fun processAuth(email: String, password: String) {
+        fun processAuth(email: String, password: String) {
         if (email.isNotBlank() || password.isNotBlank()){
-            loginViewModel.login(email, password){ success, userHasComplete, message ->
+            authViewModel.login(email, password){ success, userHasComplete, message ->
                 Toast.makeText(ctx, message, Toast.LENGTH_LONG).show()
                 if (success && userHasComplete) {
                     Log.e("Message", "success and complete")
@@ -98,7 +97,8 @@ fun SignInPage(
                 color = purple100,
                 colorText = light100,
                 modifier = Modifier.clickable {
-                   processAuth(email = email.value, password = password.value)
+//                   processAuth(email = email.value, password = password.value)
+                    navController.navigate(Screen.Dashboard.route)
                 }
             )
             Spacer(modifier = Modifier.height(35.dp))

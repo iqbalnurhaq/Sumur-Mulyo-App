@@ -35,6 +35,8 @@ val yellow60 = Color(0XFFFCCC6F)
 val yellow80 = Color(0XFFFCBB3C)
 val yellow100 = Color(0XFFFCAC12)
 
+val gray50 = Color(0XFFC6C6C6)
+
 
 val Transparent = Color(0x00FFFFFF)
 val black = Color(0XFF000000)

@@ -26,6 +26,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nurhaq.sumurmulyo.components.ButtonText
 import com.nurhaq.sumurmulyo.navigation.Screen
 import com.nurhaq.sumurmulyo.ui.theme.Purple200
@@ -47,6 +49,9 @@ fun OnBoardingPage(
     )
 
     val pagerState = rememberPagerState()
+    val systemUiController: SystemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(purple100)
+    systemUiController.setNavigationBarColor(Color.Transparent)
 
     Column(
         modifier = Modifier.fillMaxSize()

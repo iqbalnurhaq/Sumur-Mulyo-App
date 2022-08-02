@@ -1,4 +1,4 @@
-package com.nurhaq.sumurmulyo.viewmodel
+package com.nurhaq.sumurmulyo.ui.pages.auth
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nurhaq.sumurmulyo.data.DataStoreRepository
+import com.nurhaq.sumurmulyo.navigation.BottomScreen
 import com.nurhaq.sumurmulyo.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -28,7 +29,7 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             repository.readOnBoardingState().collect { completed ->
                 if (completed)
-                    _startDestination.value = Screen.Home.route
+                    _startDestination.value = BottomScreen.Home.route
                 else
                     _startDestination.value = Screen.OnBoarding.route
             }

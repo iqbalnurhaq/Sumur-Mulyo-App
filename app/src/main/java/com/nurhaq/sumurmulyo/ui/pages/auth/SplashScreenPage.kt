@@ -1,7 +1,6 @@
 package com.nurhaq.sumurmulyo.ui.pages.auth
 
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,11 +19,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.nurhaq.sumurmulyo.navigation.Screen
 import com.nurhaq.sumurmulyo.ui.theme.light100
 import com.nurhaq.sumurmulyo.ui.theme.purple100
 import com.nurhaq.sumurmulyo.ui.theme.yellow100
-import com.nurhaq.sumurmulyo.viewmodel.SplashViewModel
 import kotlinx.coroutines.delay
 
 
@@ -34,10 +31,14 @@ fun SplashScreenPage(
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
     val systemUiController: SystemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(Color.Transparent)
-    systemUiController.setNavigationBarColor(Color.Transparent)
-    systemUiController.setSystemBarsColor(Color.Transparent)
-    systemUiController.isNavigationBarVisible = false
+    systemUiController.setStatusBarColor(purple100)
+    systemUiController.setNavigationBarColor(purple100)
+//    systemUiController.setSystemBarsColor(Color.Transparent)
+//
+//    systemUiController.isNavigationBarVisible = false
+//    systemUiController.isStatusBarVisible = false
+////    systemUiController.isSystemBarsVisible = false
+
 
 
     LaunchedEffect(key1 = true){

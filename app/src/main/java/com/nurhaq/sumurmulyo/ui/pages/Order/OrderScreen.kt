@@ -1,4 +1,4 @@
-package com.nurhaq.sumurmulyo.ui.pages
+package com.nurhaq.sumurmulyo.ui.pages.Order
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun OrderScreen(navController: NavController) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -21,7 +21,7 @@ fun HomeScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Home Screen")
+            Text(text = "Order Screen")
         }
     }
 }

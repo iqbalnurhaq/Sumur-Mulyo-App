@@ -1,6 +1,8 @@
 package com.nurhaq.sumurmulyo.ui.pages.auth
 
+import android.util.Log
 import android.widget.Space
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +26,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nurhaq.sumurmulyo.ui.components.InputText
 import com.nurhaq.sumurmulyo.ui.parts.HeaderNav
@@ -35,9 +39,28 @@ import com.nurhaq.sumurmulyo.util.HyperlinkText
 @Composable
 fun SignUpPage(
     navController: NavController,
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
+
+    val name = rememberSaveable { mutableStateOf("") }
+    val email = rememberSaveable { mutableStateOf("") }
+    val password = rememberSaveable { mutableStateOf("") }
+    val phone = rememberSaveable { mutableStateOf("") }
     val isChecked = rememberSaveable { mutableStateOf(false) }
     val scrollState = rememberScrollState()
+    val ctx = LocalContext.current
+
+    fun processAuth(name: String, email: String, password: String, phone: String) {
+        if (name.isNotBlank() || email.isNotBlank() || password.isNotBlank() || phone.isNotBlank()) {
+            authViewModel.register(name, email, password, phone) { success, userHasComplete, message ->
+                Toast.makeText(ctx, message, Toast.LENGTH_LONG).show()
+            }
+        }else{
+            Toast.makeText(ctx, "Field is required", Toast.LENGTH_LONG).show()
+        }
+    }
+
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -56,7 +79,12 @@ fun SignUpPage(
                     .padding(horizontal = 16.dp)
                     .padding(top = 50.dp)
             ) {
-                UseFormSignUp()
+                UseFormSignUp(
+                    name = name,
+                    email = email,
+                    password = password,
+                    phone = phone
+                )
             }
             Row(
                 modifier = Modifier
@@ -90,6 +118,18 @@ fun SignUpPage(
                     title = "Sign Up",
                     color = purple100,
                     colorText = light100,
+                    modifier = Modifier.clickable {
+                        Log.e("name", name.value)
+                        Log.e("email", email.value)
+                        Log.e("pass", password.value)
+                        Log.e("phone", phone.value)
+                        processAuth(
+                            name = name.value,
+                            email = email.value,
+                            password = password.value,
+                            phone = phone.value
+                        )
+                    }
                 )
                 Text(
                     modifier = Modifier
@@ -173,11 +213,13 @@ fun Check(
 @Composable
 fun UseFormSignUp(
     loading: Boolean = false,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    name : MutableState<String>,
+    email: MutableState<String>,
+    password: MutableState<String>,
+    phone: MutableState<String>
 ) {
-    val name = rememberSaveable { mutableStateOf("") }
-    val email = rememberSaveable { mutableStateOf("") }
-    val password = rememberSaveable { mutableStateOf("") }
+
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }
 
 
@@ -207,6 +249,12 @@ fun UseFormSignUp(
             keyboardType = KeyboardType.Password,
             passwordVisibility = passwordVisibility,
             trailingIcon = R.drawable.ic_eye_open
+        )
+        InputText(
+            valueState = phone,
+            placeholder = "Phone",
+            enabled = !loading,
+            keyboardType = KeyboardType.Phone
         )
     }
 
