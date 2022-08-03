@@ -17,7 +17,7 @@ sealed class BottomScreen (val route: String, val title: String, @DrawableRes va
     object Home: BottomScreen(route = "home", title = "Home", icon = R.drawable.ic_home)
     object Transaction: BottomScreen(route = "transaction", title = "transaction", icon = R.drawable.ic_transaction)
     object Profile: BottomScreen("profile", "Profile", R.drawable.ic_user)
-    object Order: BottomScreen("order", "Order", R.drawable.ic_transaction)
+    object Order: BottomScreen("order", "Order", R.drawable.ic_order)
 }
 
 val bottomNavigationItems = listOf(

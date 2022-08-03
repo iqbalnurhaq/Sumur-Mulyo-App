@@ -2,6 +2,8 @@ package com.nurhaq.sumurmulyo.ui.parts
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
@@ -30,7 +32,8 @@ fun AppBottomNavigation(
 ){
     var selectedIndex by remember { mutableStateOf(0) }
     BottomNavigation(
-        backgroundColor = light60
+        backgroundColor = light60,
+        modifier = Modifier.height(60.dp)
     ) {
         bottomNavigationItems.forEachIndexed { index, it ->
             BottomNavigationItem(
@@ -40,6 +43,7 @@ fun AppBottomNavigation(
                         contentDescription = it.title,
                         tint = if (selectedIndex == index) purple100 else gray50
                     )
+                    Spacer(modifier = Modifier.height(25.dp))
                 },
                 label = {
                     Text(

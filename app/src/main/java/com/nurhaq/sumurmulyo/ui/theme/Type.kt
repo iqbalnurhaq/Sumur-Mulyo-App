@@ -48,6 +48,12 @@ val Typography = Typography(
         fontSize = 14.sp,
         color = black
     ),
+    h6 = TextStyle(
+        fontFamily = poppins,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        color = black
+    )
     /* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,
