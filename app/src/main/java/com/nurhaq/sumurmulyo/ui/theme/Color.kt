@@ -42,6 +42,12 @@ val teal60 = Color(0XFF65D1AA)
 val teal80 = Color(0XFF2AB784)
 val teal100 = Color(0XFF00A86B)
 
+val blue20 = Color(0XFFBDDCFF)
+val blue40 = Color(0XFF8AC0FF)
+val blue60 = Color(0XFF57A5FF)
+val blue80 = Color(0XFF248AFF)
+val blue100 = Color(0XFF0077FF)
+
 val gray50 = Color(0XFFC6C6C6)
 
 
