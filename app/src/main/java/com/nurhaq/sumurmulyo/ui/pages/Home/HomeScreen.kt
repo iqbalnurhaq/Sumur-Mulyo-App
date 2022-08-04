@@ -1,5 +1,6 @@
 package com.nurhaq.sumurmulyo.ui.pages
 
+import android.util.Log
 import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,6 +15,9 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,22 +28,43 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nurhaq.sumurmulyo.R
 import com.nurhaq.sumurmulyo.ui.components.CardFeature
 import com.nurhaq.sumurmulyo.ui.components.CardTransaction
+import com.nurhaq.sumurmulyo.ui.pages.Home.HomeViewModel
 import com.nurhaq.sumurmulyo.ui.theme.*
 
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(
+    navController: NavController,
+//    homeViewModel: HomeViewModel = hiltViewModel()
+) {
+    val viewModel = hiltViewModel<HomeViewModel>()
 
     val systemUiController: SystemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(Color.White)
-
     val scrollState = rememberScrollState()
+
+    val transactionState by viewModel.homeState.observeAsState(
+        initial = HomeViewModel.TransactionUIState()
+    )
+
+
+//    Log.e("tesss", transactionState.loading.toString())
+
+
+//    LaunchedEffect(key1 = true ){
+//        viewModel.getRecentTransaction(1)
+//    }
+
+
+
+
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -180,54 +205,61 @@ fun HomeScreen(navController: NavController) {
                         .padding(horizontal = 16.dp)
                 ) {
 
-                    CardTransaction(
-                        title = "Buy some grocery", 
-                        category = "Shopping", 
-                        icon = R.drawable.ic_shopping_bag, 
-                        price = "Rp 15.000", 
-                        date = "15/9/2022"
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    CardTransaction(
-                        title = "Subscription on Disney+ Hotstar",
-                        category = "Subscription",
-                        icon = R.drawable.ic_recurring_bill,
-                        price = "Rp 13.000",
-                        date = "8/9/2022"
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    CardTransaction(
-                        title = "Subscription on Disney+ Hotstar",
-                        category = "Subscription",
-                        icon = R.drawable.ic_recurring_bill,
-                        price = "Rp 13.000",
-                        date = "8/9/2022"
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    CardTransaction(
-                        title = "Subscription on Disney+ Hotstar",
-                        category = "Subscription",
-                        icon = R.drawable.ic_recurring_bill,
-                        price = "Rp 13.000",
-                        date = "8/9/2022"
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    CardTransaction(
-                        title = "Subscription on Disney+ Hotstar",
-                        category = "Subscription",
-                        icon = R.drawable.ic_recurring_bill,
-                        price = "Rp 13.000",
-                        date = "8/9/2022"
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    CardTransaction(
-                        title = "Payment for july",
-                        category = "Salary",
-                        icon = R.drawable.ic_salary,
-                        price = "Rp 97.500",
-                        date = "1/9/2022"
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    if (!transactionState.loading && !transactionState.error){
+                        transactionState.data.forEachIndexed { index, transactionResponse ->
+                            CardTransaction(
+                                title = transactionResponse.description,
+                                category = transactionResponse.type.name,
+                                icon = if (transactionResponse.type.name == "Billing") R.drawable.ic_salary else R.drawable.ic_shopping_bag,
+                                price = transactionResponse.price,
+                                date = transactionResponse.date
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                    }
+
+
+
+//                    CardTransaction(
+//                        title = "Subscription on Disney+ Hotstar",
+//                        category = "Subscription",
+//                        icon = R.drawable.ic_recurring_bill,
+//                        price = "Rp 13.000",
+//                        date = "8/9/2022"
+//                    )
+//                    Spacer(modifier = Modifier.height(8.dp))
+//                    CardTransaction(
+//                        title = "Subscription on Disney+ Hotstar",
+//                        category = "Subscription",
+//                        icon = R.drawable.ic_recurring_bill,
+//                        price = "Rp 13.000",
+//                        date = "8/9/2022"
+//                    )
+//                    Spacer(modifier = Modifier.height(8.dp))
+//                    CardTransaction(
+//                        title = "Subscription on Disney+ Hotstar",
+//                        category = "Subscription",
+//                        icon = R.drawable.ic_recurring_bill,
+//                        price = "Rp 13.000",
+//                        date = "8/9/2022"
+//                    )
+//                    Spacer(modifier = Modifier.height(8.dp))
+//                    CardTransaction(
+//                        title = "Subscription on Disney+ Hotstar",
+//                        category = "Subscription",
+//                        icon = R.drawable.ic_recurring_bill,
+//                        price = "Rp 13.000",
+//                        date = "8/9/2022"
+//                    )
+//                    Spacer(modifier = Modifier.height(8.dp))
+//                    CardTransaction(
+//                        title = "Payment for july",
+//                        category = "Salary",
+//                        icon = R.drawable.ic_salary,
+//                        price = "Rp 97.500",
+//                        date = "1/9/2022"
+//                    )
+//                    Spacer(modifier = Modifier.height(8.dp))
                     Spacer(modifier = Modifier.height(80.dp))
                 }
             }

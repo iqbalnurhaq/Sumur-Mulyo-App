@@ -50,8 +50,8 @@ fun OnBoardingPage(
 
     val pagerState = rememberPagerState()
     val systemUiController: SystemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(purple100)
-    systemUiController.setNavigationBarColor(Color.Transparent)
+    systemUiController.setStatusBarColor(Color.White)
+    systemUiController.setNavigationBarColor(Color.White)
 
     Column(
         modifier = Modifier.fillMaxSize()

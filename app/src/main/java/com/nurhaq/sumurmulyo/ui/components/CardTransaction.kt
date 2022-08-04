@@ -27,7 +27,7 @@ fun CardTransaction(
     category: String,
     @DrawableRes icon: Int,
     price: String,
-    date: String
+    date: String,
 ) {
     Box(
         modifier = Modifier
@@ -50,7 +50,7 @@ fun CardTransaction(
                 Box(
                     modifier = Modifier
                         .background(
-                            if (category == "Subscription") purple20 else if(category == "Shopping") yellow20 else if (category == "Salary") teal20  else yellow20,
+                            if (category == "Subscription") purple20 else if(category == "Shopping") yellow20 else if (category == "Billing") teal20  else yellow20,
                             shape = RoundedCornerShape(CornerSize(16.dp))
                         )
                         .padding(15.dp)
@@ -60,7 +60,7 @@ fun CardTransaction(
                         painter = painterResource(id = icon),
                         contentDescription = "recent item icon",
                         modifier = Modifier.size(30.dp),
-                        tint = if (category == "Subscription") purple100 else if(category == "Shopping") yellow100 else if (category == "Salary") teal100 else yellow100
+                        tint = if (category == "Subscription") purple100 else if(category == "Shopping") yellow100 else if (category == "Billing") teal100 else yellow100
                     )
                 }
                 Spacer(modifier = Modifier.width(9.dp))

@@ -250,6 +250,7 @@ fun UseFormSignUp(
             passwordVisibility = passwordVisibility,
             trailingIcon = R.drawable.ic_eye_open
         )
+        Spacer(modifier = Modifier.height(24.dp))
         InputText(
             valueState = phone,
             placeholder = "Phone",

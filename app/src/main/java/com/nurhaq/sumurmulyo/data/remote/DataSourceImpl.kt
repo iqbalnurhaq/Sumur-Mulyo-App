@@ -4,7 +4,6 @@ import com.nurhaq.sumurmulyo.data.utils.safeApiCall
 import com.nurhaq.sumurmulyo.model.request.LoginRequest
 import com.nurhaq.sumurmulyo.model.request.RegisterRequest
 import com.nurhaq.sumurmulyo.network.ApiService
-import com.nurhaq.sumurmulyo.network.utils.DataState
 
 class DataSourceImpl(
     private val apiService: ApiService
@@ -34,6 +33,14 @@ class DataSourceImpl(
                 password = password,
                 phone = phone
             )
+        )
+    }
+
+    override suspend fun getTransaction(
+        user_id: Int
+    ) = safeApiCall {
+        apiService.getTransaction(
+            user_id = user_id
         )
     }
 }

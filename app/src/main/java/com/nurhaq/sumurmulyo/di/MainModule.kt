@@ -9,7 +9,9 @@ import com.nurhaq.sumurmulyo.data.coroutines.DefaultDispatcherProvider
 import com.nurhaq.sumurmulyo.data.coroutines.DispatcherProvider
 import com.nurhaq.sumurmulyo.data.remote.DataSource
 import com.nurhaq.sumurmulyo.network.ApiService
+import com.nurhaq.sumurmulyo.repository.MainRepositoryImpl
 import com.nurhaq.sumurmulyo.repository.UserRepositoryImpl
+import com.nurhaq.sumurmulyo.repository.design.MainRepository
 import com.nurhaq.sumurmulyo.repository.design.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -54,6 +56,20 @@ object MainModule {
         gson: Gson,
     ): UserRepository {
         return UserRepositoryImpl(
+            dispatcherProvider,
+            dataSource,
+            gson
+        )
+    }
+
+
+    @Provides
+    fun provideMainRepository(
+        dispatcherProvider: DispatcherProvider,
+        dataSource: DataSource,
+        gson: Gson
+    ): MainRepository {
+        return MainRepositoryImpl(
             dispatcherProvider,
             dataSource,
             gson
