@@ -97,8 +97,8 @@ fun SignInPage(
                 color = purple100,
                 colorText = light100,
                 modifier = Modifier.clickable {
-//                   processAuth(email = email.value, password = password.value)
-                    navController.navigate(Screen.Dashboard.route)
+                   processAuth(email = email.value, password = password.value)
+//                    navController.navigate(Screen.Dashboard.route)
                 }
             )
             Spacer(modifier = Modifier.height(35.dp))

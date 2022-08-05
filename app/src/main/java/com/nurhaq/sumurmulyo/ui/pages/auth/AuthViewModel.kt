@@ -1,7 +1,9 @@
 package com.nurhaq.sumurmulyo.ui.pages.auth
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nurhaq.sumurmulyo.data.DataStoreRepository
 import com.nurhaq.sumurmulyo.network.utils.DataState
 import com.nurhaq.sumurmulyo.repository.design.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val dataStoreRepository: DataStoreRepository
 ):ViewModel() {
     fun login(
         email: String,
@@ -24,6 +27,10 @@ class AuthViewModel @Inject constructor(
             .onEach {
                 when (it) {
                     is DataState.onData -> {
+                        dataStoreRepository.setUser(it.data.user)
+//                        dataStoreRepository.getUserId().collect {
+//                            Log.e("user_id_ya", it.toString())
+//                        }
                         callback(true, true, "success login")
                     }
                     is DataState.onFailure -> {
