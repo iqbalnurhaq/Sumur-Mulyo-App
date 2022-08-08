@@ -3,7 +3,10 @@ package com.nurhaq.sumurmulyo.ui.pages.auth
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.nurhaq.sumurmulyo.data.DataStoreRepository
+import com.nurhaq.sumurmulyo.model.response.User
+import com.nurhaq.sumurmulyo.model.response.UserResponse
 import com.nurhaq.sumurmulyo.network.utils.DataState
 import com.nurhaq.sumurmulyo.repository.design.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,10 +30,8 @@ class AuthViewModel @Inject constructor(
             .onEach {
                 when (it) {
                     is DataState.onData -> {
-                        dataStoreRepository.setUser(it.data.user)
-//                        dataStoreRepository.getUserId().collect {
-//                            Log.e("user_id_ya", it.toString())
-//                        }
+                        dataStoreRepository.setUser(it.data)
+//                        toStringUser(it.data.user)
                         callback(true, true, "success login")
                     }
                     is DataState.onFailure -> {
@@ -62,6 +63,11 @@ class AuthViewModel @Inject constructor(
             }.collect()
     }
 
+//    fun toStringUser(user: User){
+//        val gson = Gson()
+//        val json =  gson.toJson(user)
+//        Log.e("tagg", gson.toJson(user))
+//    }
 //    fun saveOnBoardingState(completed: Boolean) {
 //        viewModelScope.launch(Dispatchers.IO) {
 //            repository.saveOnBoardingState(completed = completed)

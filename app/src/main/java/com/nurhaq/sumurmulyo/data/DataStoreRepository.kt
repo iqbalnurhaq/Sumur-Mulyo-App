@@ -2,14 +2,15 @@ package com.nurhaq.sumurmulyo.data
 
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
+import com.google.gson.Gson
 import com.nurhaq.sumurmulyo.model.response.User
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
+import com.nurhaq.sumurmulyo.model.response.UserResponse
+import kotlinx.coroutines.flow.*
 import java.io.IOException
 
 val Context.boardingDataStore: DataStore<Preferences> by preferencesDataStore(name = "boarding_pref")
@@ -23,7 +24,8 @@ class DataStoreRepository(context: Context) {
 
     private object UserPreferencesKey {
         val userIdKey = intPreferencesKey(name = "user_id")
-        val userKey = stringPreferencesKey(name = "user")
+        val nameKey = stringPreferencesKey(name = "name")
+        val accessToken = stringPreferencesKey(name = "access_token")
     }
 
     private val boardingDataStore = context.boardingDataStore
@@ -35,12 +37,16 @@ class DataStoreRepository(context: Context) {
         }
     }
 
-    suspend fun setUser(user: User){
+    suspend fun setUser(user: UserResponse){
+        val gson = Gson()
+        val json =  gson.toJson(user)
         userDataStore.edit { preferences ->
-            preferences[UserPreferencesKey.userIdKey] = user.id
-            preferences[UserPreferencesKey.userKey] = user.toString()
+            preferences[UserPreferencesKey.userIdKey] = user.user.id
+            preferences[UserPreferencesKey.nameKey] = gson.toJson(user.user)
+            preferences[UserPreferencesKey.accessToken] = user.access_token
         }
     }
+
 
     fun readOnBoardingState(): Flow<Boolean> {
         return boardingDataStore.data
@@ -56,21 +62,22 @@ class DataStoreRepository(context: Context) {
             }
     }
 
-    fun getUserId(): Flow<Int> {
-        return userDataStore.data
-            .catch { exception ->
-                if (exception is IOException)
-                    emit(emptyPreferences())
-                else
-                    throw exception
-            }
-            .map { preferences ->
-                val userId = preferences[UserPreferencesKey.userIdKey] ?: 0
-                userId
-            }
-    }
+//    suspend fun getUserId(): Flow<Int> {
+//         return userDataStore.data
+//            .catch { exception ->
+//                if (exception is IOException)
+//                    emit(emptyPreferences())
+//                else
+//                    throw exception
+//            }
+//            .map { preferences ->
+//                val userId = preferences[UserPreferencesKey.userIdKey] ?: 0
+//                userId
+//            }
+//    }
 
-    fun getUser(): Flow<String> {
+    fun getUser(): Flow<User> {
+        val gson = Gson()
         return userDataStore.data
             .catch { exception ->
                 if (exception is IOException)
@@ -79,8 +86,18 @@ class DataStoreRepository(context: Context) {
                     throw exception
             }
             .map {  preferences ->
-                val user = preferences[UserPreferencesKey.userKey] ?: ""
-                user
+                val name = preferences[UserPreferencesKey.nameKey] ?: ""
+                gson.fromJson(name, User::class.java)
             }
+    }
+
+    suspend fun getUserId(): Int? {
+        val id = userDataStore.data.first()
+        return id[UserPreferencesKey.userIdKey]
+    }
+
+    suspend fun getAccessToken(): String? {
+        val tokenPreferences =  userDataStore.data.first()
+        return tokenPreferences[UserPreferencesKey.accessToken]
     }
 }

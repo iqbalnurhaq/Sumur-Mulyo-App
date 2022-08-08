@@ -6,7 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MainRepository {
 
-    suspend fun getRecentTransaction(
-        user_id: Int
-    ): Flow<DataState<List<TransactionResponse>>>
+    suspend fun getRecentTransaction(): Flow<DataState<List<TransactionResponse>>>
 }

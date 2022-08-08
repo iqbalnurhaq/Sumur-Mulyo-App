@@ -41,9 +41,10 @@ object MainModule {
         return Gson()
     }
 
+
     @Provides
     internal fun provideDataSource(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): DataSource = SumurData.getDataSource(
         context,
         "http://192.168.100.159:8000/api/"
@@ -62,16 +63,17 @@ object MainModule {
         )
     }
 
-
     @Provides
     fun provideMainRepository(
         dispatcherProvider: DispatcherProvider,
         dataSource: DataSource,
+        dataStoreRepository: DataStoreRepository,
         gson: Gson
     ): MainRepository {
         return MainRepositoryImpl(
             dispatcherProvider,
             dataSource,
+            dataStoreRepository,
             gson
         )
     }

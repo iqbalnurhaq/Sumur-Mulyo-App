@@ -13,4 +13,9 @@ data class User(
     val name: String,
     val phone: String,
     val profile_photo_path: Any,
-)
+){
+    override fun toString(): String {
+        return "User [email: ${this.email}, email_verified_at: ${this.email_verified_at}, id: ${this.id}, name: ${this.name}, phone: ${this.phone}, profile_photo_path: ${this.profile_photo_path}]"
+    }
+}
+

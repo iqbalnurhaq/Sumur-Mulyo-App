@@ -5,6 +5,7 @@ import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,6 +36,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nurhaq.sumurmulyo.R
 import com.nurhaq.sumurmulyo.ui.components.CardFeature
 import com.nurhaq.sumurmulyo.ui.components.CardTransaction
+import com.nurhaq.sumurmulyo.ui.components.ShimmerAnimatedItem
 import com.nurhaq.sumurmulyo.ui.pages.Home.HomeViewModel
 import com.nurhaq.sumurmulyo.ui.theme.*
 
@@ -205,8 +207,18 @@ fun HomeScreen(
                         .padding(horizontal = 16.dp)
                 ) {
 
+                    if (transactionState.loading && !transactionState.error){
+                        Column(
+                            modifier = Modifier.fillMaxSize()
+                        ){
+                            repeat(5){
+                                ShimmerAnimatedItem()
+                            }
+                        }
+                    }
+
                     if (!transactionState.loading && !transactionState.error){
-                        transactionState.data.forEachIndexed { index, transactionResponse ->
+                        transactionState.data?.forEachIndexed { index, transactionResponse ->
                             CardTransaction(
                                 title = transactionResponse.description,
                                 category = transactionResponse.type.name,
@@ -217,6 +229,32 @@ fun HomeScreen(
                             Spacer(modifier = Modifier.height(8.dp))
                         }
                     }
+                    if (transactionState.data == null && !transactionState.loading) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(120.dp),
+                                painter = painterResource(id = R.drawable.ic_no_data),
+                                contentDescription = "no data found", tint = purple60,
+                            )
+                            Spacer(modifier = Modifier.padding(top = 12.dp))
+                            Text(
+                                text = "Opss no transaction yet?",
+                                style = MaterialTheme.typography.h5.copy(fontSize = 18.sp)
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "You have never done a transaction",
+                                style = MaterialTheme.typography.h5.copy(color = light10)
+                            )
+
+
+                        }
+                    }
+
 
 
 
