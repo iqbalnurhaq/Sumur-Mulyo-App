@@ -7,6 +7,7 @@ import com.nurhaq.sumurmulyo.data.coroutines.DispatcherProvider
 import com.nurhaq.sumurmulyo.data.local.room.TransactionDao
 import com.nurhaq.sumurmulyo.data.local.room.UserDao
 import com.nurhaq.sumurmulyo.data.remote.DataSource
+import com.nurhaq.sumurmulyo.model.response.ProductResponse
 import com.nurhaq.sumurmulyo.model.response.TransactionResponse
 import com.nurhaq.sumurmulyo.model.response.toEntity
 import com.nurhaq.sumurmulyo.network.entities.TransactionEntity
@@ -44,6 +45,20 @@ class MainRepositoryImpl constructor(
                 }
                 DataState.onLoading -> emit(DataState.onLoading)
             }
+        }
+    }.flowOn(dispatcherProvider.io())
+
+    override suspend fun gerListProduct(): Flow<DataState<List<ProductResponse>>> = flow {
+        emit(DataState.onLoading)
+        when(val result = dataSource.getListProduct()){
+            is DataState.onData -> {
+                val product = result.data.data
+                emit(DataState.onData(product))
+            }
+            is DataState.onFailure -> {
+                emit(DataState.onFailure(result.message))
+            }
+            DataState.onLoading -> emit(DataState.onLoading)
         }
     }.flowOn(dispatcherProvider.io())
 

@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -56,18 +57,11 @@ fun HomeScreen(
         initial = HomeViewModel.TransactionUIState()
     )
 
-    Log.e("loading", transactionState.loading.toString())
+    val productState by viewModel.productState.observeAsState(
+        initial = HomeViewModel.ProductUIState()
+    )
 
-
-//    Log.e("tesss", transactionState.loading.toString())
-
-
-//    LaunchedEffect(key1 = true ){
-//        viewModel.getRecentTransaction(1)
-//    }
-
-
-
+//    Log.e("loading", productState.loading.toString())
 
     Surface(
         modifier = Modifier.fillMaxSize()
@@ -148,7 +142,6 @@ fun HomeScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-
             Column(
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
@@ -174,6 +167,43 @@ fun HomeScreen(
             }
             
             Spacer(modifier = Modifier.height(16.dp))
+            
+            Column {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Product",
+                        style = MaterialTheme.typography.h4.copy(color = black)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .background(purple20, shape = RoundedCornerShape(CornerSize(30.dp)))
+                            .padding(
+                                horizontal = 16.dp,
+                                vertical = 5.dp
+                            )
+                            .clip(RoundedCornerShape(CornerSize(30.dp)))
+                    ) {
+                        Text(
+                            text = "See All",
+                            style = MaterialTheme.typography.h5.copy(color = purple100)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                listProduct()
+
+                Spacer(modifier = Modifier.height(16.dp))
+                
+
+            }
 
             Column {
                 Row(
@@ -233,7 +263,9 @@ fun HomeScreen(
                     }
                     if (transactionState.data == null && !transactionState.loading) {
                         Column(
-                            modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 12.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
@@ -308,3 +340,63 @@ fun HomeScreen(
     }
 }
 
+
+
+@Composable
+fun listProduct(){
+    LazyRow(
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        items(4) {
+            Box(
+                modifier = Modifier
+                    .width(150.dp)
+                    .height(170.dp)
+                    .background(light60, shape = RoundedCornerShape(CornerSize(16.dp)))
+                    .clip(RoundedCornerShape(CornerSize(16.dp)))
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Top
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(0.6f),
+                        painter = painterResource(id = R.drawable.product_dummy),
+                        contentDescription = "product image",
+                        contentScale = ContentScale.Crop
+                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(0.4f)
+                            .padding(horizontal = 10.dp)
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp),
+                            text = "Pipa Paralon 3cm dan 9cm",
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.h3.copy(color = black)
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = "Rp 30.000",
+                            style = MaterialTheme.typography.h5.copy(color = blue100)
+                        )
+
+                    }
+
+                }
+            }
+        }
+
+
+    }
+}

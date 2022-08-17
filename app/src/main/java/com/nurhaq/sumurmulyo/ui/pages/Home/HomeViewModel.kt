@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nurhaq.sumurmulyo.data.DataStoreRepository
+import com.nurhaq.sumurmulyo.model.response.ProductResponse
 import com.nurhaq.sumurmulyo.model.response.TransactionResponse
 import com.nurhaq.sumurmulyo.network.entities.TransactionEntity
 import com.nurhaq.sumurmulyo.network.utils.DataState
@@ -31,13 +32,24 @@ class HomeViewModel @Inject constructor(
         var data: List<TransactionEntity>? = listOf()
     )
 
+    data class ProductUIState(
+        var loading: Boolean = true,
+        var error: Boolean = false,
+        var errorMessage: String = "",
+        var data: List<ProductResponse>? = listOf()
+    )
+
 
 
     private var _homeState = MutableLiveData<TransactionUIState>()
     val homeState get() = _homeState
 
+    private var _productState = MutableLiveData<ProductUIState>()
+    val productState get() = _productState
+
     init {
         getTransaction()
+        getListProduct()
     }
 
 
@@ -70,7 +82,41 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 )
+            }.collect()
+    }
 
+    fun getListProduct() = viewModelScope.launch {
+        mainRepository.gerListProduct()
+            .onEach {
+                _productState.postValue(
+                    when(it) {
+                        is DataState.onData -> {
+                            ProductUIState(
+                                loading = false,
+                                error = false,
+                                errorMessage = "",
+                                data = it.data
+                            )
+                        }
+                        is DataState.onFailure -> {
+                            ProductUIState(
+                                loading = false,
+                                error = true,
+                                errorMessage = "",
+                                data = listOf()
+                            )
+                        }
+                        DataState.onLoading -> {
+                            ProductUIState(
+                                loading = false,
+                                error = false,
+                                errorMessage = "",
+                                data = listOf()
+                            )
+                        }
+                    }
+
+                )
             }.collect()
     }
 

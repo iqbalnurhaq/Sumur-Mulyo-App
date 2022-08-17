@@ -1,5 +1,6 @@
 package com.nurhaq.sumurmulyo.data.remote
 
+import com.nurhaq.sumurmulyo.model.response.ProductResponse
 import com.nurhaq.sumurmulyo.model.response.TransactionResponse
 import com.nurhaq.sumurmulyo.model.response.UserResponse
 import com.nurhaq.sumurmulyo.model.response.base.ApiBaseResponse
@@ -22,4 +23,6 @@ interface DataSource {
     suspend fun getTransaction(
         user_id: Int
     ): DataState<ApiBaseResponse<List<TransactionResponse>>>
+
+    suspend fun getListProduct(): DataState<ApiBaseResponse<List<ProductResponse>>>
 }
