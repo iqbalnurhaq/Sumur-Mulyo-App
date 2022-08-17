@@ -24,7 +24,6 @@ class DataStoreRepository(context: Context) {
 
     private object UserPreferencesKey {
         val userIdKey = intPreferencesKey(name = "user_id")
-        val nameKey = stringPreferencesKey(name = "name")
         val accessToken = stringPreferencesKey(name = "access_token")
     }
 
@@ -42,7 +41,6 @@ class DataStoreRepository(context: Context) {
         val json =  gson.toJson(user)
         userDataStore.edit { preferences ->
             preferences[UserPreferencesKey.userIdKey] = user.user.id
-            preferences[UserPreferencesKey.nameKey] = gson.toJson(user.user)
             preferences[UserPreferencesKey.accessToken] = user.access_token
         }
     }
@@ -75,21 +73,6 @@ class DataStoreRepository(context: Context) {
 //                userId
 //            }
 //    }
-
-    fun getUser(): Flow<User> {
-        val gson = Gson()
-        return userDataStore.data
-            .catch { exception ->
-                if (exception is IOException)
-                    emit(emptyPreferences())
-                else
-                    throw exception
-            }
-            .map {  preferences ->
-                val name = preferences[UserPreferencesKey.nameKey] ?: ""
-                gson.fromJson(name, User::class.java)
-            }
-    }
 
     suspend fun getUserId(): Int? {
         val id = userDataStore.data.first()

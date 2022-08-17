@@ -2,6 +2,8 @@ package com.nurhaq.sumurmulyo.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.room.Room
+import com.nurhaq.sumurmulyo.data.local.room.SumurDatabase
 import com.nurhaq.sumurmulyo.data.remote.DataSource
 import com.nurhaq.sumurmulyo.data.remote.DataSourceImpl
 import com.nurhaq.sumurmulyo.network.ApiService
@@ -67,7 +69,11 @@ class SumurData() {
                 }.build()
         }
 
-
-
+        fun initializeDatabase(appContext: Context): SumurDatabase =
+            Room.databaseBuilder(
+                appContext,
+                SumurDatabase::class.java,
+                SumurDatabase.DATABASE_NAME
+            ).fallbackToDestructiveMigration().build()
     }
 }

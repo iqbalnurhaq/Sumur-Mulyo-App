@@ -33,11 +33,6 @@ fun SplashScreenPage(
     val systemUiController: SystemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(purple100)
     systemUiController.setNavigationBarColor(purple100)
-//    systemUiController.setSystemBarsColor(Color.Transparent)
-//
-//    systemUiController.isNavigationBarVisible = false
-//    systemUiController.isStatusBarVisible = false
-////    systemUiController.isSystemBarsVisible = false
 
 
 

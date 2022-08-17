@@ -56,6 +56,8 @@ fun HomeScreen(
         initial = HomeViewModel.TransactionUIState()
     )
 
+    Log.e("loading", transactionState.loading.toString())
+
 
 //    Log.e("tesss", transactionState.loading.toString())
 
@@ -221,8 +223,8 @@ fun HomeScreen(
                         transactionState.data?.forEachIndexed { index, transactionResponse ->
                             CardTransaction(
                                 title = transactionResponse.description,
-                                category = transactionResponse.type.name,
-                                icon = if (transactionResponse.type.name == "Billing") R.drawable.ic_salary else R.drawable.ic_shopping_bag,
+                                category = transactionResponse.type,
+                                icon = if (transactionResponse.type == "Billing") R.drawable.ic_salary else R.drawable.ic_shopping_bag,
                                 price = transactionResponse.price,
                                 date = transactionResponse.date
                             )

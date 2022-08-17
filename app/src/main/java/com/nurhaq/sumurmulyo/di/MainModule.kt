@@ -7,6 +7,9 @@ import com.nurhaq.sumurmulyo.data.DataStoreRepository
 import com.nurhaq.sumurmulyo.data.SumurData
 import com.nurhaq.sumurmulyo.data.coroutines.DefaultDispatcherProvider
 import com.nurhaq.sumurmulyo.data.coroutines.DispatcherProvider
+import com.nurhaq.sumurmulyo.data.local.room.SumurDatabase
+import com.nurhaq.sumurmulyo.data.local.room.TransactionDao
+import com.nurhaq.sumurmulyo.data.local.room.UserDao
 import com.nurhaq.sumurmulyo.data.remote.DataSource
 import com.nurhaq.sumurmulyo.network.ApiService
 import com.nurhaq.sumurmulyo.repository.MainRepositoryImpl
@@ -55,11 +58,13 @@ object MainModule {
         dispatcherProvider: DispatcherProvider,
         dataSource: DataSource,
         gson: Gson,
+        userDao: UserDao
     ): UserRepository {
         return UserRepositoryImpl(
             dispatcherProvider,
             dataSource,
-            gson
+            gson,
+            userDao
         )
     }
 
@@ -68,13 +73,17 @@ object MainModule {
         dispatcherProvider: DispatcherProvider,
         dataSource: DataSource,
         dataStoreRepository: DataStoreRepository,
-        gson: Gson
+        gson: Gson,
+        transactionDao: TransactionDao,
+        userDao: UserDao
     ): MainRepository {
         return MainRepositoryImpl(
             dispatcherProvider,
             dataSource,
             dataStoreRepository,
-            gson
+            gson,
+            transactionDao,
+            userDao
         )
     }
 
@@ -90,6 +99,21 @@ object MainModule {
     fun provideDataStoreRepository(
         @ApplicationContext context: Context
     ) = DataStoreRepository(context =  context)
+
+    @Provides
+    @Singleton
+    internal fun localDatabase(
+        @ApplicationContext appContext: Context
+    ): SumurDatabase = SumurData.initializeDatabase(appContext)
+
+    @Provides
+    internal fun provideTransactionDao(appDb: SumurDatabase): TransactionDao = appDb.transactionDao()
+
+    @Provides
+    internal fun provideUserDao(appDb: SumurDatabase): UserDao = appDb.userDao()
+
+
+
 
 //    @Provides
 //    @Singleton

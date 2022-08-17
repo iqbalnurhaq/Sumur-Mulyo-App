@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +28,8 @@ fun ButtonText(
     color: Color,
     colorText : Color,
     rounded: Dp = 16.dp,
-    icon: Int? = null
+    icon: Int? = null,
+    loading: Boolean = false
 ) {
     Box(
         modifier = modifier
@@ -42,20 +44,29 @@ fun ButtonText(
             verticalAlignment = Alignment.CenterVertically
         ){
 
-            if (icon != null){
-
-                Image(
-                    modifier = Modifier.size(32.dp),
-                    painter = painterResource(id = icon),
-                    contentDescription = "icon button",
+            if (loading){
+                CircularProgressIndicator(
+                    color = Color.White,
                 )
-                Spacer(modifier = Modifier.width(10.dp))
+            }else{
+                if (icon != null){
+                    Image(
+                        modifier = Modifier.size(32.dp),
+                        painter = painterResource(id = icon),
+                        contentDescription = "icon button",
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                }
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.h4.copy(color = colorText),
+                    textAlign = TextAlign.Center,
+                )
             }
-            Text(
-                text = title,
-                style = MaterialTheme.typography.h4.copy(color = colorText),
-                textAlign = TextAlign.Center,
-            )
+
+
+
+
         }
     }
 }

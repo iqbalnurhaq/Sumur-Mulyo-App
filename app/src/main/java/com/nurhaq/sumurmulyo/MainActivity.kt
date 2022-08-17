@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,6 +26,8 @@ import com.nurhaq.sumurmulyo.ui.theme.SumurMulyoTheme
 
 import dagger.hilt.android.AndroidEntryPoint
 
+
+@OptIn(ExperimentalMaterialApi::class)
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
 @AndroidEntryPoint

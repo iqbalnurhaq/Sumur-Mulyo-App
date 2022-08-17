@@ -13,6 +13,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -42,15 +44,25 @@ fun SignInPage(
     authViewModel: AuthViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
-
     val ctx = LocalContext.current
 
-        fun processAuth(email: String, password: String) {
+    val viewModel = hiltViewModel<AuthViewModel>()
+
+    val loginState by viewModel.loginState.observeAsState(
+        initial = AuthViewModel.LoginUIState()
+    )
+
+
+
+    fun processAuth(email: String, password: String) {
         if (email.isNotBlank() || password.isNotBlank()){
+            Log.e("loading", loginState.loading.toString())
             authViewModel.login(email, password){ success, userHasComplete, message ->
+                Log.e("loading", loginState.loading.toString())
                 Toast.makeText(ctx, message, Toast.LENGTH_LONG).show()
                 if (success && userHasComplete) {
                     Log.e("Message", "success and complete")
+                    navController.navigate(Screen.Dashboard.route)
                 }
                 if (success && !userHasComplete) {
                     Log.e("Message", "success and not complete")
@@ -99,7 +111,8 @@ fun SignInPage(
                 modifier = Modifier.clickable {
                    processAuth(email = email.value, password = password.value)
 //                    navController.navigate(Screen.Dashboard.route)
-                }
+                },
+                loading = loginState.loading
             )
             Spacer(modifier = Modifier.height(35.dp))
             Row(
