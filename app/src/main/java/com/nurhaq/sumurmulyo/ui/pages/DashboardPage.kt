@@ -49,7 +49,7 @@ fun DashboardPage(
     ) {
         NavHost(
             navController = navController as NavHostController,
-            startDestination = BottomScreen.Home.route
+            startDestination = BottomScreen.Profile.route
         ) {
             composable(
                 route = BottomScreen.Home.route

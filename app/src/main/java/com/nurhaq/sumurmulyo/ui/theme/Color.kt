@@ -48,9 +48,17 @@ val blue60 = Color(0XFF57A5FF)
 val blue80 = Color(0XFF248AFF)
 val blue100 = Color(0XFF0077FF)
 
+val red20 = Color(0XFFFDD5D7)
+val red40 = Color(0XFFFDA2A9)
+val red60 = Color(0XFFFD6F7A)
+val red80 = Color(0XFFFD5662)
+val red100 = Color(0XFFFD3C4A)
+
 val gray50 = Color(0XFFC6C6C6)
 
 
 val Transparent = Color(0x00FFFFFF)
 val black = Color(0XFF000000)
+
+val background = Color(0xFFF6F6F6)
 

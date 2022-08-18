@@ -75,7 +75,7 @@ class HomeViewModel @Inject constructor(
                             )
                         }
                         DataState.onLoading -> TransactionUIState(
-                            loading = false,
+                            loading = true,
                             error = false,
                             errorMessage = "",
                             data = listOf()
@@ -108,14 +108,13 @@ class HomeViewModel @Inject constructor(
                         }
                         DataState.onLoading -> {
                             ProductUIState(
-                                loading = false,
+                                loading = true,
                                 error = false,
                                 errorMessage = "",
                                 data = listOf()
                             )
                         }
                     }
-
                 )
             }.collect()
     }

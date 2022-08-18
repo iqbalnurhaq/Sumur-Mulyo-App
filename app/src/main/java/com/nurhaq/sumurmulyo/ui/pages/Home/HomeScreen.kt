@@ -36,6 +36,7 @@ import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nurhaq.sumurmulyo.R
 import com.nurhaq.sumurmulyo.ui.components.CardFeature
+import com.nurhaq.sumurmulyo.ui.components.CardProduct
 import com.nurhaq.sumurmulyo.ui.components.CardTransaction
 import com.nurhaq.sumurmulyo.ui.components.ShimmerAnimatedItem
 import com.nurhaq.sumurmulyo.ui.pages.Home.HomeViewModel
@@ -61,7 +62,7 @@ fun HomeScreen(
         initial = HomeViewModel.ProductUIState()
     )
 
-//    Log.e("loading", productState.loading.toString())
+//    Log.e("loading", transactionState.loading.toString())
 
     Surface(
         modifier = Modifier.fillMaxSize()
@@ -349,52 +350,7 @@ fun listProduct(){
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(4) {
-            Box(
-                modifier = Modifier
-                    .width(150.dp)
-                    .height(170.dp)
-                    .background(light60, shape = RoundedCornerShape(CornerSize(16.dp)))
-                    .clip(RoundedCornerShape(CornerSize(16.dp)))
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Top
-                ) {
-                    Image(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .weight(0.6f),
-                        painter = painterResource(id = R.drawable.product_dummy),
-                        contentDescription = "product image",
-                        contentScale = ContentScale.Crop
-                    )
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(0.4f)
-                            .padding(horizontal = 10.dp)
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 8.dp),
-                            text = "Pipa Paralon 3cm dan 9cm",
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.h3.copy(color = black)
-                        )
-                        Spacer(modifier = Modifier.height(2.dp))
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            text = "Rp 30.000",
-                            style = MaterialTheme.typography.h5.copy(color = blue100)
-                        )
-
-                    }
-
-                }
-            }
+            CardProduct()
         }
 
 

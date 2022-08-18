@@ -53,6 +53,13 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         color = black
+    ),
+
+    subtitle1 = TextStyle(
+        fontFamily = poppins,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp,
+        color = black
     )
     /* Other default text styles to override
     button = TextStyle(
