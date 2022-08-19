@@ -30,7 +30,6 @@ fun ProfileScreen(navController: NavController) {
     Surface(
         modifier = Modifier
             .fillMaxSize(),
-        color = background
     ) {
         Column(
             modifier = Modifier
@@ -101,7 +100,7 @@ fun ProfileScreen(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.White, shape = RoundedCornerShape(CornerSize(24.dp)))
+                    .background(background, shape = RoundedCornerShape(CornerSize(24.dp)))
                     .clip(RoundedCornerShape(CornerSize(24.dp)))
 
             ) {
@@ -109,23 +108,22 @@ fun ProfileScreen(navController: NavController) {
                     title = "Account",
                     icon = R.drawable.ic_wallet
                 )
-                Divider(color = background, thickness = 2.dp)
+                Divider(color = Color.White, thickness = 2.dp)
                 CardProfile(
                     title = "Subscriber",
                     icon = R.drawable.ic_file
                 )
-                Divider(color = background, thickness = 2.dp)
+                Divider(color = Color.White, thickness = 2.dp)
                 CardProfile(
                     title = "Setting",
                     icon = R.drawable.ic_settings
                 )
-                Divider(color = background, thickness = 2.dp)
+                Divider(color = Color.White, thickness = 2.dp)
                 CardProfile(
                     title = "Logout",
                     icon = R.drawable.ic_logout,
                     color = red20
                 )
-
             }
         }
     }

@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.nurhaq.sumurmulyo.navigation.Screen
 import com.nurhaq.sumurmulyo.navigation.SetupNavGraph
+import com.nurhaq.sumurmulyo.ui.pages.Complaint.ComplaintScreen
 import com.nurhaq.sumurmulyo.ui.pages.DashboardPage
 import com.nurhaq.sumurmulyo.ui.pages.auth.OnBoardingPage
 import com.nurhaq.sumurmulyo.ui.pages.auth.SignInPage
@@ -48,7 +49,7 @@ class MainActivity : ComponentActivity() {
                 
                 NavHost(
                     navController = navController,
-                    startDestination = Screen.Dashboard.route
+                    startDestination = Screen.Complaint.route
                 ){
                     composable(
                         route = Screen.Splash.route
@@ -74,6 +75,12 @@ class MainActivity : ComponentActivity() {
                         route = Screen.Dashboard.route
                     ){
                         DashboardPage(navBarNavController)
+                    }
+
+                    composable(
+                        route = Screen.Complaint.route
+                    ){
+                        ComplaintScreen(navController)
                     }
                 }
 //                SetupNavGraph(navController = navController, startDestination = Screen.Dashboard.route)

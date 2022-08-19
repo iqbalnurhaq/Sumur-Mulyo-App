@@ -262,7 +262,7 @@ fun HomeScreen(
                             Spacer(modifier = Modifier.height(8.dp))
                         }
                     }
-                    if (transactionState.data == null && !transactionState.loading) {
+                    if (transactionState.data?.isEmpty() == true && !transactionState.loading) {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
